@@ -22,21 +22,13 @@ app.use(express.json());
 
 // MongoDB
 mongoose
-  .connect(
-    "mongodb://127.0.0.1:27017/authDB"
-  )
-
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected");
   })
-
   .catch((error) => {
-    console.log(
-      "MongoDB Error:",
-      error
-    );
+    console.log("MongoDB Error:", error);
   });
-
 
 // Routes
 app.use("/", authRoutes);
@@ -45,10 +37,8 @@ app.use("/", dashboardRoutes);
 
 
 // Server
-app.listen(5000, () => {
+const PORT = process.env.PORT || 5000;
 
-  console.log(
-    "Server running on port 5000"
-  );
-
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
